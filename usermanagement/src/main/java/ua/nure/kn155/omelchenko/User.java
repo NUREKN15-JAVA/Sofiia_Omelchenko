@@ -42,17 +42,23 @@ public class User {
 	}
 
 	public Object getFullName() throws IllegalStateException {
-		if(getFirstName()==null || getLastName() == null)
-				throw new IllegalStateException();
+		if (getFirstName() == null || getLastName() == null)
+			throw new IllegalStateException();
 		return new StringBuilder().append(getLastName()).append(", ").append(getFirstName()).toString();
 	}
 
-	public int getAge() {
+	public int getAge() throws IllegalStateException {
+		if (dateOfBirthd == null) {
+			throw new IllegalStateException();
+		}
 		Calendar instance = Calendar.getInstance();
 		instance.setTime(new Date());
 		int currentYear = instance.get(Calendar.YEAR);
 		instance.setTime(getDateOfBirthd());
 		int year = instance.get(Calendar.YEAR);
+		if (year > currentYear) {
+			throw new IllegalStateException();
+		}
 		return currentYear - year;
 	}
 

@@ -1,6 +1,9 @@
 Testsuite: ua.nure.kn155.omelchenko.UserTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,015 sec
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,02 sec
 
-Testcase: testGetFullName took 0,005 sec
+Testcase: testGetFullName took 0,007 sec
+Testcase: testGetFullNameWithoutSecondName took 0,001 sec
+Testcase: testGetNonebornAge took 0,001 sec
 Testcase: testGetFullNameWithoutFirstName took 0 sec
-Testcase: testGetAge took 0 sec
+Testcase: testGetAge took 0,001 sec
+Testcase: testEmptyAge took 0,001 sec
