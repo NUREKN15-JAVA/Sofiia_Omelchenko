@@ -14,9 +14,11 @@ import ua.nure.kn155.omelchenko.User;
 class HsqldbUserDao implements UserDao {
 
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname,lastname,dateofbirth) VALUES (?,?,?)";
+	private static final String DELETE_QUERY = "DELETE FROM users WHERE id=? ";
+
 	private ConnectionFactory connectionFactory;
 
-	public HsqldbUserDao(){
+	public HsqldbUserDao() {
 	}
 
 	public ConnectionFactory getConnectionFactory() {
@@ -66,19 +68,45 @@ class HsqldbUserDao implements UserDao {
 
 	@Override
 	public void update(User user) throws DatabaseExeption {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void delete(User user) throws DatabaseExeption {
-		// TODO Auto-generated method stub
-
+		try {
+			Connection connection = connectionFactory.createConnection();
+			PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
+			statement.setLong(1, user.getId());
+			statement.executeUpdate();
+//			while (resultSet.next()) {
+//				if (resultSet.getLong(1) == user.getId()) {
+//					resultSet.deleteRow();
+//				}
+//			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public User find(Long id) throws DatabaseExeption {
-		// TODO Auto-generated method stub
+		try {
+			Connection connection = connectionFactory.createConnection();
+			String queryStr = "SELECT id, firstname, lastname, dateofbirth FROM users";
+			ResultSet resultSet = connection.createStatement().executeQuery(queryStr);
+			while (resultSet.next()) {
+				if (resultSet.getLong(1) == id) {
+					User user = new User();
+					user.setId(resultSet.getLong(1));
+					user.setFirstName(resultSet.getString(2));
+					user.setLastName(resultSet.getString(3));
+					user.setDateOfBirthd(resultSet.getDate(4));
+					return user;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

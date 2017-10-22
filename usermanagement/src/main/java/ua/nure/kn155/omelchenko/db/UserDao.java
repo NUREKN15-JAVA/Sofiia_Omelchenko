@@ -11,9 +11,9 @@ public interface UserDao {
 	/**
 	 * 
 	 * @author София 
-	 * add user int db
+	 * add user in db
 	 * @param user
-	 *            all field of user must be field with exception of id id must be
+	 *            all field of user must be field with exception of id, id must be
 	 *            null
 	 * @return copy of user with id from db
 	 * 			any trouble with db yield exception  DatabaseExeption
@@ -29,7 +29,7 @@ public interface UserDao {
 	public void delete(User user) throws DatabaseExeption;
 /**
  * 
- * @param id mus be exist
+ * @param id must be exist
  * @return
  * @throws DatabaseExeption
  */
