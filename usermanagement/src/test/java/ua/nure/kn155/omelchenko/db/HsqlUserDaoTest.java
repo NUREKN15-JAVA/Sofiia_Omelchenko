@@ -18,6 +18,7 @@ import ua.nure.kn155.omelchenko.User;
 public class HsqlUserDaoTest extends DatabaseTestCase {
 	private static final Long FIND_ID = 1L;
 	private static final Long DELETE_ID = 2L;
+	private static final Long UPDATE_ID = 3L;
 	private HsqldbUserDao dao;
 	private ConnectionFactory connectionFactory;
 
@@ -71,7 +72,17 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 
 	@Test
 	public void testUpdate() {
-
+		try {
+			User user = dao.find(UPDATE_ID);
+			assertNotNull("User is null", user);
+			user.setLastName("Alen");
+ 			dao.update(user);
+ 			User updatedUser = dao.find(UPDATE_ID);
+			assertNotNull("User wasn't deleted", updatedUser);
+			assertEquals(user.getLastName(), updatedUser.getLastName());
+		} catch (DatabaseExeption e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -94,7 +105,7 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 		try {
 			collection = dao.findAll();
 			assertNotNull("Collection is null", collection);
-			assertEquals("Collection size.", 2, collection.size());
+			assertEquals("Collection size.", 3, collection.size());
 		} catch (DatabaseExeption e) {
 			e.printStackTrace();
 		}

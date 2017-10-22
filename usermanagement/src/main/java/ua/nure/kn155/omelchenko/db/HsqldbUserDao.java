@@ -14,7 +14,8 @@ import ua.nure.kn155.omelchenko.User;
 class HsqldbUserDao implements UserDao {
 
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname,lastname,dateofbirth) VALUES (?,?,?)";
-	private static final String DELETE_QUERY = "DELETE FROM users WHERE id=? ";
+	private static final String DELETE_QUERY = "DELETE FROM users WHERE id=?";
+	private static final String UPDATE_QUERY = "UPDATE users SET firstname=?,lastname=?,dateofbirth=? WHERE id=?";
 
 	private ConnectionFactory connectionFactory;
 
@@ -68,7 +69,18 @@ class HsqldbUserDao implements UserDao {
 
 	@Override
 	public void update(User user) throws DatabaseExeption {
-
+		try {
+		Connection connection = connectionFactory.createConnection();
+		PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+		statement.setString(1, user.getFirstName());
+		statement.setString(2, user.getLastName());
+		statement.setDate(3, new Date(user.getDateOfBirthd().getTime()));
+		statement.setLong(4, user.getId());
+		statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -78,11 +90,6 @@ class HsqldbUserDao implements UserDao {
 			PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
 			statement.setLong(1, user.getId());
 			statement.executeUpdate();
-//			while (resultSet.next()) {
-//				if (resultSet.getLong(1) == user.getId()) {
-//					resultSet.deleteRow();
-//				}
-//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
