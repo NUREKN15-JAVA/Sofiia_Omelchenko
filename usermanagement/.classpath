@@ -6,5 +6,7 @@
 	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/София/.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+	<classpathentry kind="lib" path="C:/Users/София/eclipse-workspace/usermanagement/lib/dbunit-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/София/eclipse-workspace/usermanagement/lib/hsqldb-1.8.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
