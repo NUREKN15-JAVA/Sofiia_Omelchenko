@@ -14,6 +14,10 @@ public class UserTest extends TestCase {
 	private User user;
 	private Date dateOfBirthd;
 	private Date futureDateOfBirthd;
+	/**
+        * Константы DAY_OF_BIRTHD, YEAR_OF_BIRTHD используются для установления даты рождения 
+        * Константа FUTURE_YEAR содержит год, который наступит
+        */
 	private final int DAY_OF_BIRTHD = 9;
 	private final int YEAR_OF_BIRTHD = 1998;
 	private final int CURRENT_YEAR = 2017;
@@ -75,7 +79,10 @@ public class UserTest extends TestCase {
 			// TODO: handle exception
 		}
 	}
-
+/**
+*  Метод testGetNonebornAge() устанавливает дату рождения, которая ещё не наступила относительно установленной.  
+* 
+*/
 	@Test
 	public void testGetNonebornAge() {
 		user.setDateOfBirthd(futureDateOfBirthd);
