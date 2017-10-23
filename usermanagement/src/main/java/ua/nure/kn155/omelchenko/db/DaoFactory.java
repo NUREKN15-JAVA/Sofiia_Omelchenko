@@ -15,12 +15,12 @@ public class DaoFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-	    
-	    public static DaoFactory getInstance() {
-	        return INSTANCE;
-	    }
+
+	public static DaoFactory getInstance() {
+		return INSTANCE;
+	}
+
 	private ConnectionFactory getConnectionFactory() {
 		String driver = PROPERTIES.getProperty("connection.driver");
 		String url = PROPERTIES.getProperty("connection.url");

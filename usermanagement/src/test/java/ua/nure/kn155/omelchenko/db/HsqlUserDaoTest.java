@@ -16,16 +16,16 @@ import org.junit.Test;
 import ua.nure.kn155.omelchenko.User;
 
 public class HsqlUserDaoTest extends DatabaseTestCase {
+	/**
+	 * Constants FIND_ID, DELETE_ID, UPDATE_ID contain IDs for instances which are used 
+	 * in tests testFind(), testDelete(), testUpdate()
+	 */
 	private static final Long FIND_ID = 1L;
 	private static final Long DELETE_ID = 2L;
 	private static final Long UPDATE_ID = 3L;
 	private HsqldbUserDao dao;
 	private ConnectionFactory connectionFactory;
 
-	/**
-	 * написать остальные методы для тестирования update, .... (min=4) поменять
-	 * junit на 3й
-	 */
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -34,7 +34,8 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 
 	@Override
 	protected IDatabaseConnection getConnection() throws Exception {
-		connectionFactory = new ConnectionFactoryImpl("org.hsqldb.jdbcDriver", "jdbc:hsqldb:file:db/usermanagement",
+		connectionFactory = new ConnectionFactoryImpl("org.hsqldb.jdbcDriver", 
+				"jdbc:hsqldb:file:db/usermanagement",
 				"sa", "");
 		return new DatabaseConnection(connectionFactory.createConnection());
 	}
@@ -61,7 +62,6 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 			assertNotNull(createdUser.getId());
 			assertNotNull(createdUser.getFullName());
 			assertNotNull(createdUser.getDateOfBirthd());
-//			assertEquals(user.getId(), createdUser.getId());
 			assertEquals(user.getFullName(), createdUser.getFullName());
 			assertEquals(user.getDateOfBirthd(), createdUser.getDateOfBirthd());
 		} catch (DatabaseExeption e) {

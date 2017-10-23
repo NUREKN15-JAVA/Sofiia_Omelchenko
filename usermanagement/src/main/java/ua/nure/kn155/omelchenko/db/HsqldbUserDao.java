@@ -1,5 +1,7 @@
 package ua.nure.kn155.omelchenko.db;
 
+import static org.junit.Assert.fail;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,9 +15,15 @@ import ua.nure.kn155.omelchenko.User;
 
 class HsqldbUserDao implements UserDao {
 
+	/**
+	 * Constants INSERT_QUERY, DELETE_QUERY, UPDATE_QUERY, FIND_QUERY contain an SQL
+	 * query for inserting, deleting, updating and selecting instances in DB
+	 */
+
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname,lastname,dateofbirth) VALUES (?,?,?)";
 	private static final String DELETE_QUERY = "DELETE FROM users WHERE id=?";
 	private static final String UPDATE_QUERY = "UPDATE users SET firstname=?,lastname=?,dateofbirth=? WHERE id=?";
+	private static final String FIND_QUERY = "SELECT id, firstname, lastname, dateofbirth FROM users";
 
 	private ConnectionFactory connectionFactory;
 
@@ -70,17 +78,17 @@ class HsqldbUserDao implements UserDao {
 	@Override
 	public void update(User user) throws DatabaseExeption {
 		try {
-		Connection connection = connectionFactory.createConnection();
-		PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
-		statement.setString(1, user.getFirstName());
-		statement.setString(2, user.getLastName());
-		statement.setDate(3, new Date(user.getDateOfBirthd().getTime()));
-		statement.setLong(4, user.getId());
-		statement.executeUpdate();
+			Connection connection = connectionFactory.createConnection();
+			PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
+			statement.setString(1, user.getFirstName());
+			statement.setString(2, user.getLastName());
+			statement.setDate(3, new Date(user.getDateOfBirthd().getTime()));
+			statement.setLong(4, user.getId());
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -99,8 +107,7 @@ class HsqldbUserDao implements UserDao {
 	public User find(Long id) throws DatabaseExeption {
 		try {
 			Connection connection = connectionFactory.createConnection();
-			String queryStr = "SELECT id, firstname, lastname, dateofbirth FROM users";
-			ResultSet resultSet = connection.createStatement().executeQuery(queryStr);
+			ResultSet resultSet = connection.createStatement().executeQuery(FIND_QUERY);
 			while (resultSet.next()) {
 				if (resultSet.getLong(1) == id) {
 					User user = new User();
@@ -113,6 +120,7 @@ class HsqldbUserDao implements UserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			fail("User with id was not find");
 		}
 		return null;
 	}
@@ -122,7 +130,7 @@ class HsqldbUserDao implements UserDao {
 		Collection<User> result = new LinkedList<User>();
 		try {
 			Connection connection = connectionFactory.createConnection();
-			String queryStr = "SELECT id, firstname, lastname, dateofbirth FROM users";
+			String queryStr = FIND_QUERY;
 			ResultSet resultSet = connection.createStatement().executeQuery(queryStr);
 			while (resultSet.next()) {
 				User user = new User();
