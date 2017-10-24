@@ -6,7 +6,7 @@ import java.util.Properties;
 public class DaoFactory {
 	private final Properties PROPERTIES;
 	private final static DaoFactory INSTANCE = new DaoFactory();
-
+	private final String USER_DAO = "ua.nure.kn155.omelchenko.db.UserDao";
 	public DaoFactory() {
 		super();
 		PROPERTIES = new Properties();
@@ -29,10 +29,15 @@ public class DaoFactory {
 		return new ConnectionFactoryImpl(driver, url, user, password);
 	}
 
-	public UserDao getUserDao() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		Class clazz = Class.forName(PROPERTIES.getProperty("ua.nure.kn155.omelchenko.db.UserDao"));
-		UserDao result = (UserDao) clazz.newInstance();
-		result.setConnectionFactory(getConnectionFactory());
+	public UserDao getUserDao(){
+		UserDao result = null;
+		try {
+			Class clazz = Class.forName(PROPERTIES.getProperty(USER_DAO));
+			result = (UserDao) clazz.newInstance();
+			result.setConnectionFactory(getConnectionFactory());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		return result;
 	}
 
