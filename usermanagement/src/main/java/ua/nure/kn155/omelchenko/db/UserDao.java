@@ -15,26 +15,26 @@ public interface UserDao {
 	 * @return an User object - copy of user with id from db any trouble with db
 	 *         yield exception DatabaseExeption
 	 */
-	public User create(User user) throws DatabaseExeption;
+	public User create(User user) throws DatabaseException;
 
 	/**
 	 * Update all attributes for instance user in db
 	 * 
 	 * @param user
 	 *            must be exist in db
-	 * @throws DatabaseExeption
+	 * @throws DatabaseException
 	 */
-	public void update(User user) throws DatabaseExeption;
+	public void update(User user) throws DatabaseException;
 
 	/**
 	 * Delete user from db
 	 * 
 	 * @param user
 	 *            must be exist in db
-	 * @throws DatabaseExeption
+	 * @throws DatabaseException
 	 */
 
-	public void delete(User user) throws DatabaseExeption;
+	public void delete(User user) throws DatabaseException;
 
 	/**
 	 * Find a user in db by id
@@ -43,18 +43,18 @@ public interface UserDao {
 	 *            must be exist in db
 	 * @return an User object representing user's copy from db with given id
 	 *         otherwise null
-	 * @throws DatabaseExeption
+	 * @throws DatabaseException
 	 */
-	public User find(Long id) throws DatabaseExeption;
+	public User find(Long id) throws DatabaseException;
 
 	/**
 	 * Find all users in db
 	 * 
 	 * @return a collection containing objects User with copies all users from db
 	 *         otherwise return empty list
-	 * @throws DatabaseExeption
+	 * @throws DatabaseException
 	 */
-	public Collection<User> findAll() throws DatabaseExeption;
+	public Collection<User> findAll() throws DatabaseException;
 
 	public void setConnectionFactory(ConnectionFactory connectionFactory);
 }

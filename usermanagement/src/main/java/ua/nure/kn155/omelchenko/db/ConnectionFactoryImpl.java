@@ -3,6 +3,7 @@ package ua.nure.kn155.omelchenko.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
 
@@ -18,8 +19,15 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
 		this.password = password;
 	}
 
+	public ConnectionFactoryImpl(Properties properties) {
+		 driver = properties.getProperty("connection.driver");
+		 url = properties.getProperty("connection.url");
+		 user = properties.getProperty("connection.user");
+		 password = properties.getProperty("connection.password");
+	}
+
 	@Override
-	public Connection createConnection() throws DatabaseExeption {
+	public Connection createConnection() throws DatabaseException {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
@@ -29,7 +37,7 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
 		try {
 			return DriverManager.getConnection(url, user, password);
 		} catch (SQLException e) {
-			throw new DatabaseExeption();
+			throw new DatabaseException();
 		}
 	}
 

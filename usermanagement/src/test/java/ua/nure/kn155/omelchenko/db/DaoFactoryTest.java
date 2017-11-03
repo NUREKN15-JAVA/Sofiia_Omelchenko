@@ -14,12 +14,7 @@ public class DaoFactoryTest extends TestCase {
 	public void testGetUserDao() {
 		DaoFactory daoFactory = DaoFactory.getInstance();
 		assertNotNull("DaoFactory instance is null",daoFactory);
-		try {
-			UserDao userDao = daoFactory.getUserDao();
-			assertNotNull("UserDao instance is null", userDao);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-			fail(e.toString());
-		}
+		UserDao userDao = daoFactory.getUserDao();
+		assertNotNull("UserDao instance is null", userDao);
 	}
 }

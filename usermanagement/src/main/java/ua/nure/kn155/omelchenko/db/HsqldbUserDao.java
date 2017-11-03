@@ -44,7 +44,7 @@ class HsqldbUserDao implements UserDao {
 	}
 
 	@Override
-	public User create(User user) throws DatabaseExeption {
+	public User create(User user) throws DatabaseException {
 		try {
 			Connection connection = connectionFactory.createConnection();
 			User resultUser = new User();
@@ -54,7 +54,7 @@ class HsqldbUserDao implements UserDao {
 			statement.setDate(3, new Date(user.getDateOfBirthd().getTime()));
 			int n = statement.executeUpdate();
 			if (n != 1) {
-				throw new DatabaseExeption("Wrong number of inserted rows: " + n);
+				throw new DatabaseException("Wrong number of inserted rows: " + n);
 			}
 			CallableStatement callableStatement = connection.prepareCall("call IDENTITY()");
 			ResultSet keys = callableStatement.executeQuery();
@@ -67,16 +67,16 @@ class HsqldbUserDao implements UserDao {
 			statement.close();
 			connection.close();
 			return resultUser;
-		} catch (DatabaseExeption e) {
+		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			throw new DatabaseExeption(e);
+			throw new DatabaseException(e);
 		}
 
 	}
 
 	@Override
-	public void update(User user) throws DatabaseExeption {
+	public void update(User user) throws DatabaseException {
 		try {
 			Connection connection = connectionFactory.createConnection();
 			PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
@@ -92,7 +92,7 @@ class HsqldbUserDao implements UserDao {
 	}
 
 	@Override
-	public void delete(User user) throws DatabaseExeption {
+	public void delete(User user) throws DatabaseException {
 		try {
 			Connection connection = connectionFactory.createConnection();
 			PreparedStatement statement = connection.prepareStatement(DELETE_QUERY);
@@ -104,7 +104,7 @@ class HsqldbUserDao implements UserDao {
 	}
 
 	@Override
-	public User find(Long id) throws DatabaseExeption {
+	public User find(Long id) throws DatabaseException {
 		try {
 			Connection connection = connectionFactory.createConnection();
 			ResultSet resultSet = connection.createStatement().executeQuery(FIND_QUERY);
@@ -126,7 +126,7 @@ class HsqldbUserDao implements UserDao {
 	}
 
 	@Override
-	public Collection<User> findAll() throws DatabaseExeption {
+	public Collection<User> findAll() throws DatabaseException {
 		Collection<User> result = new LinkedList<User>();
 		try {
 			Connection connection = connectionFactory.createConnection();
@@ -140,10 +140,10 @@ class HsqldbUserDao implements UserDao {
 				user.setDateOfBirthd(resultSet.getDate(4));
 				result.add(user);
 			}
-		} catch (DatabaseExeption e) {
+		} catch (DatabaseException e) {
 			throw e;
 		} catch (SQLException e) {
-			throw new DatabaseExeption(e);
+			throw new DatabaseException(e);
 		}
 
 		return result;

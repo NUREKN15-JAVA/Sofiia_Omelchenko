@@ -40,7 +40,7 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 		return new DatabaseConnection(connectionFactory.createConnection());
 	}
 
-	public Connection createConnection() throws DatabaseExeption {
+	public Connection createConnection() throws DatabaseException {
 		return null;
 	}
 
@@ -64,7 +64,7 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 			assertNotNull(createdUser.getDateOfBirthd());
 			assertEquals(user.getFullName(), createdUser.getFullName());
 			assertEquals(user.getDateOfBirthd(), createdUser.getDateOfBirthd());
-		} catch (DatabaseExeption e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
@@ -80,7 +80,7 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
  			User updatedUser = dao.find(UPDATE_ID);
 			assertNotNull("User wasn't deleted", updatedUser);
 			assertEquals(user.getLastName(), updatedUser.getLastName());
-		} catch (DatabaseExeption e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
 	}
@@ -94,7 +94,7 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
  			User deletedUser = dao.find(DELETE_ID);
 			assertNull("User wasn't deleted", deletedUser);
 			dao.create(user);
-		} catch (DatabaseExeption e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
 	}
@@ -106,7 +106,7 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 			collection = dao.findAll();
 			assertNotNull("Collection is null", collection);
 			assertEquals("Collection size.", 3, collection.size());
-		} catch (DatabaseExeption e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
 	}
@@ -118,7 +118,7 @@ public class HsqlUserDaoTest extends DatabaseTestCase {
 			User findedUser = dao.find(FIND_ID);
 			assertNotNull("User is null", user);
 			assertEquals("Different IDs",FIND_ID, findedUser.getId());
-		} catch (DatabaseExeption e) {
+		} catch (DatabaseException e) {
 			e.printStackTrace();
 		}
 
