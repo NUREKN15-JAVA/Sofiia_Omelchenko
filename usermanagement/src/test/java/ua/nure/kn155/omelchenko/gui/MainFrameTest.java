@@ -18,6 +18,7 @@ import com.mockobjects.dynamic.Mock;
 
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
+import junit.extensions.jfcunit.eventdata.JTableMouseEventData;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
@@ -36,7 +37,8 @@ public class MainFrameTest extends JFCTestCase {
 	private final Date now = new Date();
 	private User addedUser = new User(firstName, lastName, now);
 	private User expectedUser = new User(new Long(1), firstName, lastName, now);
-	private final User realUser = new User(new Long(500), "Klark", "Kent", new Date());
+	private final User realUser = new User(new Long(500), "Klark", "Kent", now);
+	private User editUser= new User(new Long(500), "Max", "Kent", now);
 
 	@Override
 	protected void setUp() throws Exception {
@@ -47,9 +49,9 @@ public class MainFrameTest extends JFCTestCase {
 			Properties properties = new Properties();
 			properties.setProperty("dao.factory", MockDaoFactory.class.getName());
 			DaoFactory.init(properties);
-			mockUserDao = ((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao();	
-			//users = Collections.singletonList(expectedUser);
-			mockUserDao.expectAndReturn("findAll",users);
+			mockUserDao = ((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao();
+			// users = Collections.singletonList(expectedUser);
+			mockUserDao.expectAndReturn("findAll", users);
 			setHelper(new JFCTestHelper());
 			mainFrame = new MainFrame();
 		} catch (Exception e) {
@@ -86,7 +88,7 @@ public class MainFrameTest extends JFCTestCase {
 		assertEquals(Messages.getString("user_management.UserTableModel.0"), table.getColumnName(0));
 		assertEquals(Messages.getString("user_management.UserTableModel.1"), table.getColumnName(1));
 		assertEquals(Messages.getString("user_management.UserTableModel.2"), table.getColumnName(2));
-		assertEquals(1,table.getRowCount());
+		assertEquals(1, table.getRowCount());
 		find(JButton.class, "addButton");
 		find(JButton.class, "editButton");
 		find(JButton.class, "deleteButton");
@@ -94,12 +96,8 @@ public class MainFrameTest extends JFCTestCase {
 	}
 
 	/**
-	 * add test cancel Button 
-	 * add delete Button (with warning window (find warning
-	 * window with helper)) 
-	 * add Edit Button 
-	 * add Detail 
-	 * summary 6 methods
+	 * add test cancel Button add delete Button (with warning window (find warning
+	 * window with helper)) add Edit Button add Detail summary 6 methods
 	 * 
 	 * 
 	 * 
@@ -118,7 +116,7 @@ public class MainFrameTest extends JFCTestCase {
 		find(JButton.class, "cancelButton");
 		JButton okButton = (JButton) find(JButton.class, "okButton");
 		mockUserDao.expectAndReturn("create", addedUser, expectedUser);
-		
+
 		users.add(expectedUser);
 		mockUserDao.expectAndReturn("findAll", users);
 		getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
@@ -126,41 +124,37 @@ public class MainFrameTest extends JFCTestCase {
 		find(JPanel.class, "browsePanel");
 		table = (JTable) find(JTable.class, "userTable");
 		assertEquals(2, table.getRowCount());
-		//mockUserDao.verify();
+		// mockUserDao.verify();
 	}
 
-//	public void testCancelUser() {
-//		String firstName = "Steven";
-//		String lastName = "Strange";
-//		Date now = new Date();
-//
-//		User user = new User(firstName, lastName, now);
-//		User expectedUser = new User(new Long(1), firstName, lastName, now);
-//
-//		mockUserDao.expectAndReturn("create", user, expectedUser);
-//
-//		ArrayList<User> users = new ArrayList<User>(this.users);
-//		users.add(expectedUser);
-//		mockUserDao.expectAndReturn("findAll", users);
-//
-//		JTable table = (JTable) find(JTable.class, "userTable");
-//		assertEquals(1, table.getRowCount());
-//
-//		JButton addButton = (JButton) find(JButton.class, "addButton");
-//		getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
-//
-//		find(JPanel.class, "addPanel");
-//		fillField(firstName, lastName, now);
-//
-//		find(JButton.class, "cancelButton");
-//		JButton cancelButton = (JButton) find(JButton.class, "cancelButton");
-//		getHelper().enterClickAndLeave(new MouseEventData(this, cancelButton));
-//
-//		find(JPanel.class, "browsePanel");
-//		table = (JTable) find(JTable.class, "userTable");
-//		assertEquals(2, table.getRowCount());
-//		mockUserDao.verify();
-//	}
+	public void testEditPanel() {
+		mockUserDao.expectAndReturn("update", realUser, editUser);
+		mockUserDao.expectAndReturn("findAll", users);
+		mockUserDao.expectAndReturn("find", 500L, realUser);
+		//mockUserDao.expectAndReturn("find", 500L, editUser);
+		
+		JTable table = (JTable) find(JTable.class, "userTable");
+		assertEquals(1, table.getRowCount());
+
+		JButton editButton = (JButton) find(JButton.class, "editButton");
+		getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0, 0, 1));
+		getHelper().enterClickAndLeave(new MouseEventData(this, editButton));
+
+		find(JPanel.class, "editPanel");
+		fillField(editUser.getFirstName(), editUser.getLastName(), editUser.getDateOfBirthd());
+
+		find(JButton.class, "cancelButton");
+		JButton okButton = (JButton) find(JButton.class, "okButton");
+
+		getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
+
+		find(JPanel.class, "browsePanel");
+		table = (JTable) find(JTable.class, "userTable");
+		assertEquals(1, table.getRowCount());
+		assertEquals(editUser.getId(), table.getValueAt(0, 0));
+		assertEquals(editUser.getFirstName(), table.getValueAt(0, 1));
+		assertEquals(editUser.getLastName(), table.getValueAt(0, 2));
+	}
 
 	private void fillField(String firstName, String lastName, Date now) {
 		JTextField firstNameField = (JTextField) find(JTextField.class, "firstNameField");

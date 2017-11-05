@@ -151,4 +151,9 @@ public class EditPanel extends JPanel implements ActionListener {
 
 	}
 
+	public void resetFields() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

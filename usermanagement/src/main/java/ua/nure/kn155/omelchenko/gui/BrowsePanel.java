@@ -131,6 +131,23 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			this.setVisible(false);
 			parentFrame.showAddPanel();
 		}
+		if ("edit".equalsIgnoreCase(e.getActionCommand())) { //$NON-NLS-1$
+			this.setVisible(false);
+			parentFrame.showEditPanel();
+		
+		}
+	}
+
+	public User getSelectedUser() {
+		if (getUserTable().getSelectedRow() == -1)
+			return null;
+		try {
+			User user = parentFrame.getDao().find((Long) getUserTable().getValueAt(getUserTable().getSelectedRow(), 0));
+			return user;
+		} catch (DatabaseException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return null;
 	}
 
 }

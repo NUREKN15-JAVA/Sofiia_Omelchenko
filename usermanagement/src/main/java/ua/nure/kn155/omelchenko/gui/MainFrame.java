@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DaoFactory;
 import ua.nure.kn155.omelchenko.db.UserDao;
 import ua.nure.kn155.omelchenko.util.Messages;
@@ -16,6 +17,7 @@ public class MainFrame extends JFrame {
 	private BrowsePanel browsePanel;
 	private AddPanel addPanel;
 	private UserDao dao;
+	private EditPanel editPanel;
 
 	public MainFrame() {
 		super();
@@ -73,8 +75,24 @@ public class MainFrame extends JFrame {
 		return dao;
 	}
 
+	private JPanel getEditPanel() {
+		if (editPanel == null) {
+			editPanel = new EditPanel(this);
+		}
+		((EditPanel) editPanel).resetFields();
+		return editPanel;
+	}
+
 	public static void main(String[] args) {
 		MainFrame frame = new MainFrame();
+	}
+
+	public User getSelectedUser() {
+		return ((BrowsePanel) browsePanel).getSelectedUser();
+	}
+
+	public void showEditPanel() {
+		showPanel(getEditPanel());
 	}
 
 }
