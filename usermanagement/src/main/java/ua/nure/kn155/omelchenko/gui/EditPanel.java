@@ -148,12 +148,6 @@ public class EditPanel extends JPanel implements ActionListener {
 		}
 		this.setVisible(false);
 		parentFrame.showBrowsPanel();
-
 	}
-
-	public void resetFields() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

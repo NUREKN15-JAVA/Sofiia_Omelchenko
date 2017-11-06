@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,6 +32,8 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JButton addButton;
 	private JTable userTable;
 	private UserTableModel model = null;
+	private final String message = "Are you sure you want delete this user ?";
+	private final String TITLE_confirm = "Окно подтверждения";
 
 	public BrowsePanel(MainFrame frame) {
 		parentFrame = frame;
@@ -134,7 +137,23 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		if ("edit".equalsIgnoreCase(e.getActionCommand())) { //$NON-NLS-1$
 			this.setVisible(false);
 			parentFrame.showEditPanel();
-		
+		}
+		if ("delete".equalsIgnoreCase(e.getActionCommand())) { //$NON-NLS-1$
+			// parentFrame.showDeletePanel();
+			int result = JOptionPane.showConfirmDialog(parentFrame, message, "Delete confirm", JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE);
+			if (result == JOptionPane.YES_OPTION) {
+				try {
+					parentFrame.getDao().delete(getSelectedUser());
+					//getUserTable().setModel(new UserTableModel(parentFrame.getDao().findAll()));
+				} catch (DatabaseException e1) {
+					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		if("details".equalsIgnoreCase(e.getActionCommand())) {
+			this.setVisible(false);
+			parentFrame.showDetailsPanel();
 		}
 	}
 
