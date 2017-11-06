@@ -85,9 +85,6 @@ public class MainFrame extends JFrame {
 		return editPanel;
 	}
 
-	public static void main(String[] args) {
-		MainFrame frame = new MainFrame();
-	}
 
 	public User getSelectedUser() {
 		return ((BrowsePanel) browsePanel).getSelectedUser();
@@ -108,4 +105,7 @@ public class MainFrame extends JFrame {
 		showPanel( getDetailsPanel());
 	}
 
+	public static void main(String[] args) {
+		MainFrame frame = new MainFrame();
+	}
 }

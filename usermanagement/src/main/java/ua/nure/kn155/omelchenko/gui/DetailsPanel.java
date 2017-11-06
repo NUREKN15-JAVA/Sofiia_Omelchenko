@@ -1,8 +1,6 @@
 package ua.nure.kn155.omelchenko.gui;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import ua.nure.kn155.omelchenko.User;
 
 import java.awt.BorderLayout;
@@ -13,11 +11,12 @@ import java.text.DateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-import ua.nure.kn155.omelchenko.User;
-import ua.nure.kn155.omelchenko.db.DatabaseException;
-import ua.nure.kn155.omelchenko.util.Messages;
+/**
+ * DetailsPanel display all information about selected user
+ * @author София
+ *
+ */
 
 public class DetailsPanel extends JPanel implements ActionListener {
 
@@ -31,11 +30,11 @@ public class DetailsPanel extends JPanel implements ActionListener {
 	private final User user;
 	private final String dateOfBirthd;
 	private JLabel idLabel;
+	
 	public DetailsPanel(MainFrame mainFrame) {
 		parentFrame = mainFrame;
 		user = parentFrame.getSelectedUser();
 		dateOfBirthd = DateFormat.getDateInstance().format(user.getDateOfBirthd());
-
 		initialize();
 	}
 
@@ -78,8 +77,6 @@ public class DetailsPanel extends JPanel implements ActionListener {
 		return fieldPanel;
 	}
 
-
-
 	private JLabel getDateOfBirthLabel() {
 		if (dateOfBirthdLabel == null) {
 			dateOfBirthdLabel = new JLabel();
@@ -115,7 +112,6 @@ public class DetailsPanel extends JPanel implements ActionListener {
 		return idLabel;
 	}
 	
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("ok".equalsIgnoreCase(e.getActionCommand())) {

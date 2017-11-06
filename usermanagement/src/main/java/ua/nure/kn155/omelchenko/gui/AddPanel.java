@@ -2,11 +2,9 @@ package ua.nure.kn155.omelchenko.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
@@ -19,6 +17,11 @@ import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DatabaseException;
 import ua.nure.kn155.omelchenko.util.Messages;
 
+/**
+ * Panel for creating new user
+ * @author София
+ *
+ */
 public class AddPanel extends JPanel implements ActionListener {
 
 	private MainFrame parentFrame;
@@ -30,6 +33,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JTextField lastNameField;
 	private JTextField firstNameField;
 	private final Color bgColor;
+	private String message = "Do you really want to cancel the creation of a new user";
 
 	public AddPanel(MainFrame frame) {
 		parentFrame = frame;
@@ -125,7 +129,6 @@ public class AddPanel extends JPanel implements ActionListener {
 			User user = new User();
 			user.setFirstName(getFirstNameField().getText());
 			user.setLastName(getLastNameField().getText());
-			DateFormat format = DateFormat.getDateInstance();
 			SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy.mm.dd");
 			try {
 				user.setDateOfBirthd(dataFormat.parse(getDateOfBirthField().getText()));
@@ -139,20 +142,28 @@ public class AddPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		clearFields();
+		if("cancel".equalsIgnoreCase(e.getActionCommand())) {
+			int result = JOptionPane.showConfirmDialog(parentFrame, message , "Cancel confirm", JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE);
+			if (result == JOptionPane.YES_OPTION) {
+				clearTextFields();
+				this.setVisible(false);
+				parentFrame.showBrowsPanel();
+			}
+		}
+		clearTextFields();
 		this.setVisible(false);
 		parentFrame.showBrowsPanel();
 	}
 
-	private void clearFields() {
+	private void clearTextFields() {
 		getFirstNameField().setText("");
 		getFirstNameField().setBackground(bgColor);
+
 		getLastNameField().setText("");
 		getLastNameField().setBackground(bgColor);
+
 		getDateOfBirthField().setText("");
 		getDateOfBirthField().setBackground(bgColor);
 	}
 }
-
-
-

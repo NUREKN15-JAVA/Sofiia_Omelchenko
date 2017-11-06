@@ -1,22 +1,14 @@
 package ua.nure.kn155.omelchenko.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.TableModel;
-
 import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DatabaseException;
 import ua.nure.kn155.omelchenko.util.Messages;
@@ -33,8 +25,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JTable userTable;
 	private UserTableModel model = null;
 	private final String message = "Are you sure you want delete this user ?";
-	private final String TITLE_confirm = "Окно подтверждения";
-
+	
 	public BrowsePanel(MainFrame frame) {
 		parentFrame = frame;
 		initialize();
@@ -145,7 +136,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			if (result == JOptionPane.YES_OPTION) {
 				try {
 					parentFrame.getDao().delete(getSelectedUser());
-					//getUserTable().setModel(new UserTableModel(parentFrame.getDao().findAll()));
+					getUserTable().setModel(new UserTableModel(parentFrame.getDao().findAll()));
 				} catch (DatabaseException e1) {
 					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}

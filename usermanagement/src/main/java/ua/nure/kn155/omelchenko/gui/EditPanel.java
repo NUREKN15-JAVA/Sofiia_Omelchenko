@@ -5,21 +5,22 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-
 import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DatabaseException;
 import ua.nure.kn155.omelchenko.util.Messages;
 
+/**
+ * EditPanel allows change user's data
+ * @author София
+ *
+ */
 public class EditPanel extends JPanel implements ActionListener {
 
 	private MainFrame parentFrame;
@@ -32,11 +33,13 @@ public class EditPanel extends JPanel implements ActionListener {
 	private JTextField firstNameField;
 	private Color bgColor;
 	private User user;
+	private final String MESSAGE = "Do you really want to cancel all changes?";
 
 	public EditPanel(MainFrame mainFrame) {
 		parentFrame = mainFrame;
 		user = parentFrame.getSelectedUser();
 		initialize();
+		bgColor = this.getBackground();
 	}
 
 	private void initialize() {
@@ -81,7 +84,6 @@ public class EditPanel extends JPanel implements ActionListener {
 		if (firstNameField == null) {
 			firstNameField = new JTextField();
 			firstNameField.setName("firstNameField"); //$NON-NLS-1$
-			//firstNameField.setText(user.getFirstName());
 		}
 		return firstNameField;
 	}
@@ -90,11 +92,6 @@ public class EditPanel extends JPanel implements ActionListener {
 		if (dateOfBirthField == null) {
 			dateOfBirthField = new JTextField();
 			dateOfBirthField.setName("dateOfBirthField"); //$NON-NLS-1$
-
-			//DateFormat format = DateFormat.getDateInstance();
-			// SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy.mm.dd");
-			// dateOfBirthField.setText(dataFormat.parse(format.format(user.getDateOfBirthd())));
-			//dateOfBirthField.setText(format.format(user.getDateOfBirthd()));
 		}
 		return dateOfBirthField;
 	}
@@ -103,7 +100,6 @@ public class EditPanel extends JPanel implements ActionListener {
 		if (lastNameField == null) {
 			lastNameField = new JTextField();
 			lastNameField.setName("lastNameField"); //$NON-NLS-1$
-			//lastNameField.setText(user.getLastName());
 		}
 		return lastNameField;
 	}
@@ -128,6 +124,17 @@ public class EditPanel extends JPanel implements ActionListener {
 		panel.add(textField);
 	}
 
+	private void clearTextFields() {
+		getFirstNameField().setText("");
+		getFirstNameField().setBackground(bgColor);
+
+		getLastNameField().setText("");
+		getLastNameField().setBackground(bgColor);
+
+		getDateOfBirthField().setText("");
+		getDateOfBirthField().setBackground(bgColor);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("ok".equalsIgnoreCase(e.getActionCommand())) {
@@ -146,8 +153,18 @@ public class EditPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		if("cancel".equalsIgnoreCase(e.getActionCommand())) {
+			int result = JOptionPane.showConfirmDialog(parentFrame, MESSAGE  , "Cancel confirm", JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE);
+			if (result == JOptionPane.YES_OPTION) {
+				clearTextFields();
+				this.setVisible(false);
+				parentFrame.showBrowsPanel();
+			}
+		}
+		clearTextFields();
 		this.setVisible(false);
 		parentFrame.showBrowsPanel();
 	}
-	
+
 }
