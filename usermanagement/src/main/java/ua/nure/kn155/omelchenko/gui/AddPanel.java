@@ -139,7 +139,6 @@ public class AddPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		
 		clearFields();
 		this.setVisible(false);
 		parentFrame.showBrowsPanel();
