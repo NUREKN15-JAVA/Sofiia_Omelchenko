@@ -149,6 +149,10 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Find selected user in the userTable
+	 * @return user from UserTable
+	 */
 	public User getSelectedUser() {
 		int selectedRow = getUserTable().getSelectedRow();
 		if (selectedRow == -1)
@@ -156,7 +160,6 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		try {
 			User user = parentFrame.getDao().find((Long) getUserTable().getValueAt(selectedRow, 0));
 			return user;
-			//return ((UserTableModel) getUserTable().getModel()).getUser(selectedRow);
 		} catch (DatabaseException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
