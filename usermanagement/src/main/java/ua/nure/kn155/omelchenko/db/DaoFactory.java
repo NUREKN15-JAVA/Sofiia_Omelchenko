@@ -3,6 +3,7 @@ package ua.nure.kn155.omelchenko.db;
 import java.io.IOException;
 import java.util.Properties;
 
+<<<<<<< HEAD
 public abstract class DaoFactory {
 	protected static Properties properties;
 	private static DaoFactory instance;
@@ -14,6 +15,15 @@ public abstract class DaoFactory {
 
 	static {
 		properties = new Properties();
+=======
+public class DaoFactory {
+	private final Properties PROPERTIES;
+	private final static DaoFactory INSTANCE = new DaoFactory();
+	private final String USER_DAO = "ua.nure.kn155.omelchenko.db.UserDao";
+	public DaoFactory() {
+		super();
+		PROPERTIES = new Properties();
+>>>>>>> origin/master
 		try {
 			properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("settings.properties"));
 
@@ -41,8 +51,21 @@ public abstract class DaoFactory {
 		instance = null;
 	}
 
+<<<<<<< HEAD
 	protected ConnectionFactory getConnectionFactory() {
 		return new ConnectionFactoryImpl(properties);
+=======
+	public UserDao getUserDao(){
+		UserDao result = null;
+		try {
+			Class clazz = Class.forName(PROPERTIES.getProperty(USER_DAO));
+			result = (UserDao) clazz.newInstance();
+			result.setConnectionFactory(getConnectionFactory());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return result;
+>>>>>>> origin/master
 	}
 
 	public abstract UserDao getUserDao();
