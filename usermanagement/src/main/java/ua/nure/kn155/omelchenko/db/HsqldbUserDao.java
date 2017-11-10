@@ -23,7 +23,7 @@ class HsqldbUserDao implements UserDao {
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname,lastname,dateofbirth) VALUES (?,?,?)";
 	private static final String DELETE_QUERY = "DELETE FROM users WHERE id=?";
 	private static final String UPDATE_QUERY = "UPDATE users SET firstname=?,lastname=?,dateofbirth=? WHERE id=?";
-	private static final String FIND_QUERY = "SELECT id, firstname, lastname, dateofbirth FROM users";
+	private static final String FIND_QUERY = "SELECT * FROM users WHERE id = ?";
 
 	private ConnectionFactory connectionFactory;
 
@@ -107,7 +107,9 @@ class HsqldbUserDao implements UserDao {
 	public User find(Long id) throws DatabaseException {
 		try {
 			Connection connection = connectionFactory.createConnection();
-			ResultSet resultSet = connection.createStatement().executeQuery(FIND_QUERY);
+			PreparedStatement statement = connection.prepareStatement(FIND_QUERY);
+			statement.setLong(1, id);
+			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				if (resultSet.getLong(1) == id) {
 					User user = new User();
