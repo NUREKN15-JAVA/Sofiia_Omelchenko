@@ -9,13 +9,13 @@ import org.junit.Test;
 
 import ua.nure.kn155.omelchenko.User;
 
+
 public class BrowseServletTest extends MockServletTestCase {
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		createServlet(BrowseServlet.class);
-
 	}
 
 	@Test
@@ -24,6 +24,7 @@ public class BrowseServletTest extends MockServletTestCase {
 		List<User> list = Collections.singletonList(user);
 		getMockUserDao().expectAndReturn("findAll", list);
 		doGet();
+		@SuppressWarnings("unchecked")
 		Collection<User> collection = (Collection<User>) getWebMockObjectFactory().getMockSession()
 				.getAttribute("users");
 		assertNotNull(collection);

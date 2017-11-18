@@ -1,7 +1,7 @@
 Testsuite: ua.nure.kn155.omelchenko.db.DaoFactoryTest
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0,015 sec
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0,047 sec
 
-Testcase: testGetUserDao took 0,015 sec
+Testcase: testGetUserDao took 0,016 sec
 	Caused an ERROR
 java.lang.NullPointerException
 java.lang.RuntimeException: java.lang.NullPointerException

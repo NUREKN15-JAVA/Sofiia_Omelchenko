@@ -5,6 +5,8 @@
 	<property name="test-java-dir" value="${basedir}/src/test/java" />
 	<property name="build-dir" value="${basedir}/bin" />
 
+	<property name="main-webapp-dir" value="${basedir}/src/main/webapp" />
+	<property name="main-webapp-webinf-dir" value="${main-webapp-dir}/WEB-INF" />
 	<property name="war-name" value="WebContent" />
 	<property name="war-dir" value="${basedir}/${war-name}" />
 	<property name="war-jsp-dir" value="${war-dir}" />
