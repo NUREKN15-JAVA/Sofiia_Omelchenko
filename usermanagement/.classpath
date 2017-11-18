@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="C:/Users/София/eclipse-workspace/usermanagement/lib/nekohtml.jar"/>
 	<classpathentry kind="lib" path="C:/Users/София/eclipse-workspace/usermanagement/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="C:/Users/София/eclipse-workspace/usermanagement/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="C:/Users/София/eclipse-workspace/usermanagement/lib/standard-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<servlet>
+	<servlet-name>Browse Servlet</servlet-name>
+	<servlet-class>ua.nure.kn155.omelchenko.web.BrowseServlet
+	</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>Browse Servlet</servlet-name>
+	<url-pattern>/browse</url-pattern>
+</servlet-mapping>
