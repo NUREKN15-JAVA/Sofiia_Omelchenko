@@ -5,13 +5,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 	<servlet>
-		<servlet-name>BrowseServlet</servlet-name>
-		<servlet-class>ua.nure.kn155.omelchenko.web.BrowseServlet
+		<servlet-name>Browse Servlet</servlet-name>
+		<servlet-class>ua.nure.kn155.omelchenko.web.BrowseServlet.java
 		</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>BrowseServlet</servlet-name>
+		<servlet-name>Browse Servlet</servlet-name>
 		<url-pattern>/browse</url-pattern>
 	</servlet-mapping>
 

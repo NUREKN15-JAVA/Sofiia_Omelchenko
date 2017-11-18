@@ -10,7 +10,7 @@ import ua.nure.kn155.omelchenko.db.MockDaoFactory;
 
 public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 	private Mock mockUserDao;
-	
+
 	public Mock getMockUserDao() {
 		return mockUserDao;
 	}
@@ -30,8 +30,8 @@ public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 
 	@Override
 	protected void tearDown() throws Exception {
-		
 		super.tearDown();
+		getMockUserDao().verify();
 	}
 
 }

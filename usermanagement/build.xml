@@ -4,10 +4,16 @@
 	<property name="main-java-dir" value="${basedir}/src/main/java" />
 	<property name="test-java-dir" value="${basedir}/src/test/java" />
 	<property name="build-dir" value="${basedir}/bin" />
+	
+	<property name="classes-dir" value="${build-dir}/classes" />
+	<property name="test-result-dir" value="${build-dir}/test-result" />
+	<property name="lib-dir" value="${basedir}/lib" />
 
 	<property name="main-webapp-dir" value="${basedir}/src/main/webapp" />
 	<property name="main-webapp-webinf-dir" value="${main-webapp-dir}/WEB-INF" />
-	<property name="war-name" value="WebContent" />
+	<!--<property name="war-name" value="WebContent" />
+	-->
+	<property name="war-name" value="users" />
 	<property name="war-dir" value="${basedir}/${war-name}" />
 	<property name="war-jsp-dir" value="${war-dir}" />
 	<property name="war-webinf-dir" value="${war-dir}/WEB-INF" />
