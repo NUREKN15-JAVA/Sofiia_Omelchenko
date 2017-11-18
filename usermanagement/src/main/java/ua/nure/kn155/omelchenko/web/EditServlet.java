@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.ValidationException;
 
 import ua.nure.kn155.omelchenko.User;
-import ua.nure.kn155.omelchenko.db.DaoFactory;
-import ua.nure.kn155.omelchenko.db.DatabaseException;
 
 public class EditServlet extends HttpServlet {
 
