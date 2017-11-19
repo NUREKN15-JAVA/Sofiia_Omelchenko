@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>User management/Browse</title>
+<title>Browse</title>
 </head>
 <body>
 	<form action="<%=request.getContextPath()%>/browse" method="post">
