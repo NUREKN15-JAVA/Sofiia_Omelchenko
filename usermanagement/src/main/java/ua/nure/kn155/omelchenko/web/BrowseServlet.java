@@ -37,12 +37,25 @@ public class BrowseServlet extends HttpServlet {
 	}
 
 	private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		String idStr = req.getParameter("id");
+		if (idStr == null) {
+			req.setAttribute("error", "You must select a user for deleting");
+			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+		}
+		try {
+			User user = DaoFactory.getInstance().getUserDao().find(new Long(idStr));
+			req.getSession().setAttribute("user", user);
+		} catch (Exception e) {
+			req.setAttribute("error", "ERROR: " + e.toString());
+			req.getRequestDispatcher("/browse.jsp");
+			return;
+		}
+		req.getRequestDispatcher("/delete").forward(req, resp);
 	}
 
 	private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String idStr = req.getParameter("id");
-		if (idStr == null || idStr.trim().length() == 0) {
+		if (idStr == null) {
 			req.setAttribute("error", "You must select a user for editting");
 			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
 		}
