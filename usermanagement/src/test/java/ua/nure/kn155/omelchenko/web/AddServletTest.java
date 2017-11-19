@@ -7,22 +7,22 @@ import org.junit.Test;
 
 import ua.nure.kn155.omelchenko.User;
 
-public class EditServletTest extends MockServletTestCase {
-	private static final long ID = 1000L;
+public class AddServletTest extends MockServletTestCase {
 	private static final String USER_LASTNAME = "Watson";
 	private static final String USER_NAME = "Jhon";
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		createServlet(EditServlet.class);
+		createServlet(AddServlet.class);
 	}
 
 	@Test
-	public void testEdit() {
+	public void testAdd() {
 		Date date = new Date();
-		User user = new User(ID, USER_NAME, USER_LASTNAME, date);
-		getMockUserDao().expect("update", user);
+		User user = new User(USER_NAME, USER_LASTNAME, date);
+		User addedUser = new User(1000L,USER_NAME, USER_LASTNAME, date);
+		getMockUserDao().expectAndReturn("create", user, addedUser);
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("lastName", USER_LASTNAME);
 		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(date));
@@ -31,7 +31,7 @@ public class EditServletTest extends MockServletTestCase {
 	}
 	
 	@Test
-	public void testEditEmptyFirstName() {
+	public void testAddEmptyFirstName() {
 		addRequestParameter("lastName", USER_LASTNAME);
 		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
 		addRequestParameter("okButton", "Ok");
@@ -41,7 +41,7 @@ public class EditServletTest extends MockServletTestCase {
 	}
 	
 	@Test
-	public void testEditEmptyLastName() {
+	public void testAddEmptyLastName() {
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
 		addRequestParameter("okButton", "Ok");
@@ -51,7 +51,7 @@ public class EditServletTest extends MockServletTestCase {
 	}
 
 	@Test
-	public void testEditEmptyDateOfBirth() {
+	public void testAddEmptyDateOfBirth() {
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("lastName", USER_LASTNAME);
 		addRequestParameter("okButton", "Ok");
@@ -61,7 +61,7 @@ public class EditServletTest extends MockServletTestCase {
 	}
 	
 	@Test
-	public void testEditInvalidDate() {
+	public void testAddInvalidDate() {
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("lastName", USER_LASTNAME);
 		addRequestParameter("dateOfBirth", "18.5.12");

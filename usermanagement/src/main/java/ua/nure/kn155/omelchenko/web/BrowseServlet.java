@@ -58,7 +58,8 @@ public class BrowseServlet extends HttpServlet {
 	}
 
 	private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		req.getSession().setAttribute("user", null);
+		req.getRequestDispatcher("/add").forward(req, resp);
 	}
 
 	private void browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException {

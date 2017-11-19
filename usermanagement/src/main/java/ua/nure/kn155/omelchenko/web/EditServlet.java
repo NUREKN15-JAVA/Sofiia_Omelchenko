@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.ValidationException;
 
 import ua.nure.kn155.omelchenko.User;
+import ua.nure.kn155.omelchenko.db.DaoFactory;
+import ua.nure.kn155.omelchenko.db.DatabaseException;
 
 public class EditServlet extends HttpServlet {
 
@@ -26,7 +28,7 @@ public class EditServlet extends HttpServlet {
 		}
 	}
 
-	private void showPage(HttpServletRequest req, HttpServletResponse resp) {
+	protected void showPage(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 		} catch (ServletException | IOException e) {
@@ -44,7 +46,7 @@ public class EditServlet extends HttpServlet {
 
 	}
 
-	private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException  {
+	private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
 		User user = null;
 		try {
 			user = getUser(req);
@@ -52,9 +54,12 @@ public class EditServlet extends HttpServlet {
 			req.setAttribute("error", e1.getMessage());
 			showPage(req, resp);
 		}
+
+		processUser(user);
+
 		try {
 			req.getRequestDispatcher("/browse").forward(req, resp);
-		} catch (ServletException | IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -96,6 +101,15 @@ public class EditServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		return user;
+	}
+
+	protected void processUser(User user) {
+		try {
+			DaoFactory.getInstance().getUserDao().update(user);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

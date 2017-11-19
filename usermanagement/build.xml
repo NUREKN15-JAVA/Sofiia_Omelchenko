@@ -2,18 +2,21 @@
 <project name="usermanagement" basedir="." default="test">
 
 	<property name="main-java-dir" value="${basedir}/src/main/java" />
+	<property name="main-resources-dir" value="${basedir}/src/main/resources" />
 	<property name="test-java-dir" value="${basedir}/src/test/java" />
+	<property name="test-resources-dir" value="${basedir}/src/test/resources" />
 	<property name="build-dir" value="${basedir}/bin" />
-	
+
 	<property name="classes-dir" value="${build-dir}/classes" />
 	<property name="test-result-dir" value="${build-dir}/test-result" />
 	<property name="lib-dir" value="${basedir}/lib" />
 
 	<property name="main-webapp-dir" value="${basedir}/src/main/webapp" />
 	<property name="main-webapp-webinf-dir" value="${main-webapp-dir}/WEB-INF" />
-	<!--<property name="war-name" value="WebContent" />
-	-->
+	<!--
 	<property name="war-name" value="users" />
+	-->
+	<property name="war-name" value="WebContent" />
 	<property name="war-dir" value="${basedir}/${war-name}" />
 	<property name="war-jsp-dir" value="${war-dir}" />
 	<property name="war-webinf-dir" value="${war-dir}/WEB-INF" />
@@ -67,14 +70,32 @@
 
 	<target name="init">
 		<mkdir dir="${build-dir}" />
+		<mkdir dir="${classes-dir}" />
 	</target>
 
 	<target name="compile" depends="init">
+		<!--
 		<javac srcdir="${main-java-dir}" destdir="${build-dir}" />
+		-->
+		<javac srcdir="${main-java-dir}" destdir="${classes-dir}" classpath="C:\Users\София\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar">
+			<classpath>
+				<fileset dir="${lib-dir}" includes="*.jar" />
+			</classpath>
+		</javac>
+		<copy todir="${classes-dir}">
+			<fileset dir="${main-resources-dir}">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="test-compile" depends="compile">
-		<javac srcdir="${test-java-dir}" destdir="${build-dir}" classpath="C:\Users\София\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar" />
+		<javac srcdir="${test-java-dir}" destdir="${build-dir}" classpath="C:\Users\София\.p2\pool\plugins\org.junit_4.12.0.v201504281640\junit.jar"> 
+			<classpath>
+				<fileset dir="${lib-dir}" includes="*.jar" />
+			</classpath>
+		</javac>
 	</target>
 
 	<target name="test" depends="test-compile">
