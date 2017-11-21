@@ -1,7 +1,5 @@
 package ua.nure.kn155.omelchenko.web;
 
-
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -12,6 +10,10 @@ import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DaoFactory;
 import ua.nure.kn155.omelchenko.db.DatabaseException;
 
+
+/**
+ * Servlet for adding a user's entry to the database
+ */
 public class AddServlet extends EditServlet {
 	@Override
 	protected void processUser(User user) {

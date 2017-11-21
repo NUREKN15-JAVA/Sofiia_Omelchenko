@@ -39,7 +39,7 @@ public class MainFrameTest extends JFCTestCase {
 	private Container mainFrame;
 	private Mock mockUserDao;
 	private List<User> users;
-	/*
+	/**
 	 * Constants FIRSTNAME, LASTNAME, NOW are used for creating new users and for
 	 * filling fields in userTable
 	 * REAL_USER_LIST_POSITION contains position of REAL_USER in the users list

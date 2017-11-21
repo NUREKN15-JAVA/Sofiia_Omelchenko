@@ -9,8 +9,11 @@ import org.junit.Test;
 
 import ua.nure.kn155.omelchenko.User;
 
-
 public class BrowseServletTest extends MockServletTestCase {
+	/**
+	 * user - constant user for testing
+	 */
+	private final User user = new User(1000L, "Jhon", "Watson", new Date());
 
 	@Override
 	protected void setUp() throws Exception {
@@ -20,7 +23,6 @@ public class BrowseServletTest extends MockServletTestCase {
 
 	@Test
 	public void testBrowse() {
-		User user = new User(1000L, "Jhon", "Watson", new Date());
 		List<User> list = Collections.singletonList(user);
 		getMockUserDao().expectAndReturn("findAll", list);
 		doGet();
@@ -33,8 +35,7 @@ public class BrowseServletTest extends MockServletTestCase {
 
 	@Test
 	public void testEdit() {
-		User user = new User(1000L, "Jhon", "Watson", new Date());
-		getMockUserDao().expectAndReturn("find", user.getId(), user);
+		getMockUserDao().expectAndReturn("find", 1000L, user);
 		addRequestParameter("editButton", "Edit");
 		addRequestParameter("id", "1000");
 		doPost();
@@ -42,4 +43,5 @@ public class BrowseServletTest extends MockServletTestCase {
 		assertNotNull(userInSession);
 		assertSame(user, userInSession);
 	}
+
 }

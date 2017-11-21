@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.nure.kn155.omelchenko.User;
 
+/**
+ * Servlet for viewing a user's data in the database
+ */
 public class DetailsServlet extends EditServlet {
 	@Override
 	protected void showPage(HttpServletRequest req, HttpServletResponse resp) {
@@ -19,6 +22,6 @@ public class DetailsServlet extends EditServlet {
 	}
 
 	@Override
-	protected void processUser(User user){
+	protected void processUser(User user) {
 	}
 }

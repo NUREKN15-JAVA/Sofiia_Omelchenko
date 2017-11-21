@@ -8,11 +8,16 @@ import org.junit.Test;
 import ua.nure.kn155.omelchenko.User;
 
 public class AddServletTest extends MockServletTestCase {
-	private static final String USER_LASTNAME = "Watson";
-	private static final String USER_NAME = "Jhon";
-	private Date date = new Date();
-	private User user = new User(USER_NAME, USER_LASTNAME, date);
-	private User addedUser = new User(1000L,USER_NAME, USER_LASTNAME, date);
+	/**
+	 * Constants FIRSTNAME, LASTNAME, DATE are used for creating new users and for
+	 * filling fields
+	 */
+	private final String LASTNAME = "Watson";
+	private final String FIRSTNAME = "Jhon";
+	private final Date DATE = new Date();
+
+	private final User USER = new User(FIRSTNAME, LASTNAME, DATE);
+	private final User ADDED_USER = new User(1000L, FIRSTNAME, LASTNAME, DATE);
 
 	@Override
 	protected void setUp() throws Exception {
@@ -20,59 +25,74 @@ public class AddServletTest extends MockServletTestCase {
 		createServlet(AddServlet.class);
 	}
 
+	/**
+	 * Testing the addition of a new user
+	 */
 	@Test
 	public void testAdd() {
-		getMockUserDao().expectAndReturn("create", user, addedUser);
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("lastName", USER_LASTNAME);
-		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(date));
+		getMockUserDao().expectAndReturn("create", USER, ADDED_USER);
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(DATE));
 		addRequestParameter("okButton", "Ok");
 		doPost();
-	}
-	
-	@Test
-	public void testAddEmptyFirstName() {
-		getMockUserDao().expectAndReturn("create", user, addedUser);
-		addRequestParameter("lastName", USER_LASTNAME);
-		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
-		addRequestParameter("okButton", "Ok");
-		doPost();
-		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
-		assertNotNull("The session didn't return an error message", errorMessage);
-	}
-	
-	@Test
-	public void testAddEmptyLastName() {
-		getMockUserDao().expectAndReturn("create", user, addedUser);
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
-		addRequestParameter("okButton", "Ok");
-		doPost();
-		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
-		assertNotNull("The session didn't return an error message", errorMessage);
 	}
 
+	/**
+	 * Testing the addition of a new user without first name
+	 */
+	@Test
+	public void testAddEmptyFirstName() {
+		getMockUserDao().expectAndReturn("create", USER, ADDED_USER);
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
+		addRequestParameter("okButton", "Ok");
+		doPost();
+		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
+		assertNotNull(errorMessage);
+	}
+
+	/**
+	 * Testing the addition of a new user without last name
+	 */
+	@Test
+	public void testAddEmptyLastName() {
+		getMockUserDao().expectAndReturn("create", USER, ADDED_USER);
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
+		addRequestParameter("okButton", "Ok");
+		doPost();
+		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
+		assertNotNull(errorMessage);
+	}
+
+	/**
+	 * Testing the addition of a new user without DateOfBirth
+	 */
 	@Test
 	public void testAddEmptyDateOfBirth() {
-		getMockUserDao().expectAndReturn("create", user, addedUser);
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("lastName", USER_LASTNAME);
+		getMockUserDao().expectAndReturn("create", USER, ADDED_USER);
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("lastName", LASTNAME);
 		addRequestParameter("dateOfBirth", "");
 		addRequestParameter("okButton", "Ok");
 		doPost();
 		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
-		assertNotNull("The session didn't return an error message", errorMessage);
+		assertNotNull(errorMessage);
 	}
-	
+
+	/**
+	 * Testing the addition of a new user with incorrect DateOfBirth
+	 */
 	@Test
 	public void testAddInvalidDate() {
-		getMockUserDao().expectAndReturn("create", user, addedUser);
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("lastName", USER_LASTNAME);
-		addRequestParameter("dateOfBirth", "18.5.12");
+		getMockUserDao().expectAndReturn("create", USER, ADDED_USER);
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("dateOfBirth", "123");
 		addRequestParameter("okButton", "Ok");
 		doPost();
 		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
-		assertNotNull("The session didn't return an error message", errorMessage);
+		assertNotNull(errorMessage);
 	}
 }

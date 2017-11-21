@@ -30,8 +30,8 @@ public abstract class MockServletTestCase extends BasicServletTestCaseAdapter {
 
 	@Override
 	protected void tearDown() throws Exception {
-		getMockUserDao().verify();
 		super.tearDown();
+		getMockUserDao().verify();
 	}
 
 }

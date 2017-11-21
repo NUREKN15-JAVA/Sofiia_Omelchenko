@@ -11,6 +11,9 @@ import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DaoFactory;
 import ua.nure.kn155.omelchenko.db.DatabaseException;
 
+/**
+ * Servlet for deleting a user's entry to the database
+ */
 public class DeleteServlet extends EditServlet {
 	@Override
 	protected void processUser(User user) {

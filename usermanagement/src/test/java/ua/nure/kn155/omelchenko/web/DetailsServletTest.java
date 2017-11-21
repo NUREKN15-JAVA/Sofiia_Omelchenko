@@ -8,9 +8,14 @@ import org.junit.Test;
 import ua.nure.kn155.omelchenko.User;
 
 public class DetailsServletTest extends MockServletTestCase {
-	private static final long ID = 1000L;
-	private static final String USER_LASTNAME = "Watson";
-	private static final String USER_NAME = "Jhon";
+	/**
+	 * Constants FIRSTNAME, LASTNAME, DATE are used for deleting existing users and for
+	 * filling fields
+	 */
+
+	private static final String LASTNAME = "Watson";
+	private static final String FIRSTNAME = "Jhon";
+	private final Date DATE = new Date();
 
 	@Override
 	protected void setUp() throws Exception {
@@ -20,12 +25,10 @@ public class DetailsServletTest extends MockServletTestCase {
 
 	@Test
 	public void testDetails() {
-		Date date = new Date();
-		User user = new User( ID ,USER_NAME, USER_LASTNAME, date);
 		addRequestParameter("id", "1000");
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("lastName", USER_LASTNAME);
-		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(date));
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(DATE));
 		addRequestParameter("okButton", "Ok");
 		doPost();
 	}

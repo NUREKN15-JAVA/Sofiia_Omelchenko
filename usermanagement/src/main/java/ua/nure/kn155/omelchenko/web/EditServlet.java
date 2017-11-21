@@ -14,6 +14,10 @@ import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DaoFactory;
 import ua.nure.kn155.omelchenko.db.DatabaseException;
 
+/**
+ * Servlet for editing a user's entry from the database
+ * 
+ */
 public class EditServlet extends HttpServlet {
 
 	@Override
@@ -39,8 +43,8 @@ public class EditServlet extends HttpServlet {
 
 	private void doCancel(HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			req.getRequestDispatcher("/browse").forward(req, resp);
-		} catch (ServletException | IOException e) {
+			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+		} catch (IOException | ServletException e) {
 			e.printStackTrace();
 		}
 
@@ -110,6 +114,7 @@ public class EditServlet extends HttpServlet {
 			DaoFactory.getInstance().getUserDao().update(user);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			return;
 		}
 
 	}

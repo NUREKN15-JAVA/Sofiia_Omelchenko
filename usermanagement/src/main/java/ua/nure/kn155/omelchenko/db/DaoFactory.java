@@ -9,32 +9,29 @@ public abstract class DaoFactory {
 	private final String USER_DAO = "ua.nure.kn155.omelchenko.db.UserDao";
 	protected static final String DAO_FACTORY = "dao.factory";
 
-	public DaoFactory() {
-		super();
+	static {
 		try {
 			properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("settings.properties"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public DaoFactory() {
+		super();
 
 	}
 
 	public static synchronized DaoFactory getInstance() {
 		if (instance == null) {
-			Class<?> factoryClass = null;
-			try {	
-//				String className= properties.getProperty(DAO_FACTORY);
-//				if(className == null)
-//					throw new RuntimeException();
-				factoryClass = Class.forName("ua.nure.kn155.omelchenko.db.DaoFactoryImpl");
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
 			try {
-				instance = (DaoFactory) factoryClass.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
+				// Class<?> factoryClass = Class.forName(properties.getProperty(DAO_FACTORY));
+				Class<?> factoryClass = Class.forName("ua.nure.kn155.omelchenko.db.DaoFactoryImpl");
+				instance = ((DaoFactory) factoryClass.newInstance());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 				throw new RuntimeException(e);
 			}
+
 		}
 		return instance;
 	}

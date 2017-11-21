@@ -8,9 +8,14 @@ import org.junit.Test;
 import ua.nure.kn155.omelchenko.User;
 
 public class EditServletTest extends MockServletTestCase {
+	/**
+	 * Constants ID, FIRSTNAME, LASTNAME, DATE are used for editing users and
+	 * for filling fields
+	 */
 	private static final long ID = 1000L;
-	private static final String USER_LASTNAME = "Watson";
-	private static final String USER_NAME = "Jhon";
+	private static final String LASTNAME = "Watson";
+	private static final String FIRSTNAME = "Jhon";
+	private final Date DATE = new Date();
 
 	@Override
 	protected void setUp() throws Exception {
@@ -18,53 +23,67 @@ public class EditServletTest extends MockServletTestCase {
 		createServlet(EditServlet.class);
 	}
 
+	/**
+	 * Testing the editing of a real user
+	 */
 	@Test
 	public void testEdit() {
-		Date date = new Date();
-		User user = new User(ID, USER_NAME, USER_LASTNAME, date);
+		User user = new User(ID, FIRSTNAME, LASTNAME, DATE);
 		getMockUserDao().expect("update", user);
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("lastName", USER_LASTNAME);
-		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(date));
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(DATE));
 		addRequestParameter("okButton", "Ok");
 		doPost();
 	}
-	
+
+	/**
+	 * Testing the editing of a real user without first name
+	 */
 	@Test
 	public void testEditEmptyFirstName() {
-		addRequestParameter("lastName", USER_LASTNAME);
-		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
-		addRequestParameter("okButton", "Ok");
-		doPost();
-		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
-		assertNotNull("The session didn't return an error message", errorMessage);
-	}
-	
-	@Test
-	public void testEditEmptyLastName() {
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(DATE));
 		addRequestParameter("okButton", "Ok");
 		doPost();
 		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
 		assertNotNull("The session didn't return an error message", errorMessage);
 	}
 
+	/**
+	 * Testing the editing of a real user without last name
+	 */
 	@Test
-	public void testEditEmptyDateOfBirth() {
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("lastName", USER_LASTNAME);
+	public void testEditEmptyLastName() {
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(DATE));
 		addRequestParameter("okButton", "Ok");
 		doPost();
 		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
 		assertNotNull("The session didn't return an error message", errorMessage);
 	}
-	
+
+	/**
+	 * Testing the editing of a real user without DateOfBirth
+	 */
+	@Test
+	public void testEditEmptyDateOfBirth() {
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("okButton", "Ok");
+		doPost();
+		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
+		assertNotNull("The session didn't return an error message", errorMessage);
+	}
+
+	/**
+	 * Testing the editing of a real user with incorrect DateOfBirth
+	 */
 	@Test
 	public void testEditInvalidDate() {
-		addRequestParameter("firstName", USER_NAME);
-		addRequestParameter("lastName", USER_LASTNAME);
-		addRequestParameter("dateOfBirth", "18.5.12");
+		addRequestParameter("firstName", FIRSTNAME);
+		addRequestParameter("lastName", LASTNAME);
+		addRequestParameter("dateOfBirth", "123");
 		addRequestParameter("okButton", "Ok");
 		doPost();
 		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
