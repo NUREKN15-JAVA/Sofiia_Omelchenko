@@ -12,7 +12,7 @@
 		<input type="text" name="firstName" value="${user.firstName}">
 		Last Name <input type="text" name="lastName" value="${user.lastName}">
 		Date of Birth <input type="text" name="dateOfBirth"
-			value="<fmt:formatDate value="${user.dateOfBirth}" type="date" dateStyle="medium"/>">
+			value="<fmt:formatDate value="${user.dateOfBirthd}" type="date" dateStyle="medium"/>">
 		<input type="submit" name="okButton" value="Ok"> <input
 			type="submit" name="cancelButton" value="Cancel">
 	</form>

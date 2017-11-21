@@ -24,6 +24,7 @@ class HsqldbUserDao implements UserDao {
 	private static final String DELETE_QUERY = "DELETE FROM users WHERE id=?";
 	private static final String UPDATE_QUERY = "UPDATE users SET firstname=?,lastname=?,dateofbirth=? WHERE id=?";
 	private static final String FIND_QUERY = "SELECT * FROM users WHERE id = ?";
+	private static final String FIND_ALL = "SELECT * FROM users";
 
 	private ConnectionFactory connectionFactory;
 
@@ -132,8 +133,7 @@ class HsqldbUserDao implements UserDao {
 		Collection<User> result = new LinkedList<User>();
 		try {
 			Connection connection = connectionFactory.createConnection();
-			String queryStr = FIND_QUERY;
-			ResultSet resultSet = connection.createStatement().executeQuery(queryStr);
+			ResultSet resultSet = connection.createStatement().executeQuery(FIND_ALL);
 			while (resultSet.next()) {
 				User user = new User();
 				user.setId(resultSet.getLong(1));

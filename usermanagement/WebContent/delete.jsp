@@ -13,7 +13,7 @@
 	<form action="<%=request.getContextPath()%>/delete" method="post">
 		First Name: ${user.firstName } <br /> Last Name ${user.lastName}<br />
 		Date of Birth
-		<fmt:formatDate value="${user.dateOfBirth}" type="date"
+		<fmt:formatDate value="${user.dateOfBirthd}" type="date"
 			dateStyle="medium" />
 		<br /> <input type="submit" name="okButton" value="Ok"> <input
 			type="submit" name="cancelButton" value="Cancel">

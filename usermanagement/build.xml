@@ -28,11 +28,9 @@
 	</presetdef>
 
 	<target name="war.exploded" depends="compile">
-		<!-- copy all jsp -->
 		<copy todir="${war-jsp-dir}">
 			<fileset dir="${main-webapp-dir}" />
 		</copy>
-		<!-- copy all libs -->
 		<copy todir="${war-lib-dir}">
 			<fileset dir="${lib-dir}">
 				<include name="hsqldb*.jar" />
@@ -40,11 +38,9 @@
 				<include name="standard*.jar" />
 			</fileset>
 		</copy>
-		<!-- copy all configs -->
 		<copy todir="${war-classes-dir}">
 			<fileset dir="${main-resources-dir}" />
 		</copy>
-		<!-- copy all classes -->
 		<copy todir="${war-classes-dir}">
 			<fileset dir="${classes-dir}" />
 		</copy>

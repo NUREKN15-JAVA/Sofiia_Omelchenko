@@ -53,6 +53,7 @@ public class EditServlet extends HttpServlet {
 		} catch (Exception e1) {
 			req.setAttribute("error", e1.getMessage());
 			showPage(req, resp);
+			return;
 		}
 
 		processUser(user);
@@ -61,6 +62,7 @@ public class EditServlet extends HttpServlet {
 			req.getRequestDispatcher("/browse").forward(req, resp);
 		} catch (IOException e) {
 			e.printStackTrace();
+			return;
 		}
 	}
 

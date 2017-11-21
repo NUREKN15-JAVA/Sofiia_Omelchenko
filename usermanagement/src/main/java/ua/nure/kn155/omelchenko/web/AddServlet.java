@@ -26,6 +26,7 @@ public class AddServlet extends EditServlet {
 	protected void showPage(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			req.getRequestDispatcher("/add.jsp").forward(req, resp);
+			return;
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}

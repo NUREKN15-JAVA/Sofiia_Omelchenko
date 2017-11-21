@@ -18,14 +18,14 @@
 					<td><input type="radio" name="id" id="id" value="${user.id}"></td>
 					<td>${user.firstName}</td>
 					<td>${user.lastName}</td>
-					<td>${user.dateOfBirth}</td>
+					<td>${user.dateOfBirthd}</td>
 				</tr>
 			</c:forEach>
 		</table>
 		<input type="submit" name="addButton" value="Add"> <input
 			type="submit" name="editButton" value="Edit"> <input
 			type="submit" name="deleteButton" value="Delete"> <input
-			type="submit" name="detailsButton" value="Datails">
+			type="submit" name="detailsButton" value="Details">
 	</form>
 	<c:if test="${requestScope.error != null}">
 		<script>

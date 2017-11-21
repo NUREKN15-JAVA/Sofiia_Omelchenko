@@ -34,7 +34,7 @@ public class BrowseServletTest extends MockServletTestCase {
 	@Test
 	public void testEdit() {
 		User user = new User(1000L, "Jhon", "Watson", new Date());
-		getMockUserDao().expectAndReturn("find", new Long(1000), user);
+		getMockUserDao().expectAndReturn("find", user.getId(), user);
 		addRequestParameter("editButton", "Edit");
 		addRequestParameter("id", "1000");
 		doPost();

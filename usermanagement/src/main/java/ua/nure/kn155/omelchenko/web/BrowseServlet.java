@@ -88,7 +88,7 @@ public class BrowseServlet extends HttpServlet {
 	}
 
 	private void browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-		Collection<User> users;
+		Collection<User> users = null;
 		try {
 			users = DaoFactory.getInstance().getUserDao().findAll();
 			req.getSession().setAttribute("users", users);

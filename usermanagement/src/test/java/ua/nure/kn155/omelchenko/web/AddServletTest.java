@@ -10,6 +10,9 @@ import ua.nure.kn155.omelchenko.User;
 public class AddServletTest extends MockServletTestCase {
 	private static final String USER_LASTNAME = "Watson";
 	private static final String USER_NAME = "Jhon";
+	private Date date = new Date();
+	private User user = new User(USER_NAME, USER_LASTNAME, date);
+	private User addedUser = new User(1000L,USER_NAME, USER_LASTNAME, date);
 
 	@Override
 	protected void setUp() throws Exception {
@@ -19,9 +22,6 @@ public class AddServletTest extends MockServletTestCase {
 
 	@Test
 	public void testAdd() {
-		Date date = new Date();
-		User user = new User(USER_NAME, USER_LASTNAME, date);
-		User addedUser = new User(1000L,USER_NAME, USER_LASTNAME, date);
 		getMockUserDao().expectAndReturn("create", user, addedUser);
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("lastName", USER_LASTNAME);
@@ -32,6 +32,7 @@ public class AddServletTest extends MockServletTestCase {
 	
 	@Test
 	public void testAddEmptyFirstName() {
+		getMockUserDao().expectAndReturn("create", user, addedUser);
 		addRequestParameter("lastName", USER_LASTNAME);
 		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
 		addRequestParameter("okButton", "Ok");
@@ -42,6 +43,7 @@ public class AddServletTest extends MockServletTestCase {
 	
 	@Test
 	public void testAddEmptyLastName() {
+		getMockUserDao().expectAndReturn("create", user, addedUser);
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(new Date()));
 		addRequestParameter("okButton", "Ok");
@@ -52,8 +54,10 @@ public class AddServletTest extends MockServletTestCase {
 
 	@Test
 	public void testAddEmptyDateOfBirth() {
+		getMockUserDao().expectAndReturn("create", user, addedUser);
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("lastName", USER_LASTNAME);
+		addRequestParameter("dateOfBirth", "");
 		addRequestParameter("okButton", "Ok");
 		doPost();
 		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
@@ -62,12 +66,13 @@ public class AddServletTest extends MockServletTestCase {
 	
 	@Test
 	public void testAddInvalidDate() {
+		getMockUserDao().expectAndReturn("create", user, addedUser);
 		addRequestParameter("firstName", USER_NAME);
 		addRequestParameter("lastName", USER_LASTNAME);
 		addRequestParameter("dateOfBirth", "18.5.12");
 		addRequestParameter("okButton", "Ok");
 		doPost();
 		String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute("error");
-		assertNotNull("Could not find error message in session scope", errorMessage);
+		assertNotNull("The session didn't return an error message", errorMessage);
 	}
 }
