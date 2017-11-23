@@ -32,4 +32,23 @@
 		<servlet-name>Add Servlet</servlet-name>
 		<url-pattern>/add</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Delete Servlet</servlet-name>
+		<servlet-class>ua.nure.kn155.omelchenko.web.DeleteServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Delete Servlet</servlet-name>
+		<url-pattern>/delete</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Details Servlet</servlet-name>
+		<servlet-class>ua.nure.kn155.omelchenko.web.DetailsServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Details Servlet</servlet-name>
+		<url-pattern>/details</url-pattern>
+	</servlet-mapping>
 </web-app>

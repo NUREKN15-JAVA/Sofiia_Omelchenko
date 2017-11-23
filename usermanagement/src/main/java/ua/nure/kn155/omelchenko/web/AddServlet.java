@@ -21,6 +21,7 @@ public class AddServlet extends EditServlet {
 			DaoFactory.getInstance().getUserDao().create(user);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			return;
 		}
 	}
 

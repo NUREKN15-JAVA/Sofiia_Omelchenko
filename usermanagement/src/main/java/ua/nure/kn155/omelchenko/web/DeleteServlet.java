@@ -15,12 +15,20 @@ import ua.nure.kn155.omelchenko.db.DatabaseException;
  * Servlet for deleting a user's entry to the database
  */
 public class DeleteServlet extends EditServlet {
+	
+	protected void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		User user = (User) req.getSession().getAttribute("user");
+		processUser(user);
+		req.getRequestDispatcher("/browse").forward(req, resp);
+	}
+
 	@Override
 	protected void processUser(User user) {
 		try {
 			DaoFactory.getInstance().getUserDao().delete(user);
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+			return;
 		}
 	}
 

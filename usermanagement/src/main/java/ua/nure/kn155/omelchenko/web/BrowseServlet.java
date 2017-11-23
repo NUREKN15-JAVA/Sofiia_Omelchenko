@@ -28,8 +28,9 @@ public class BrowseServlet extends HttpServlet {
 			delete(req, resp);
 		} else if (req.getParameter("detailsButton") != null) {
 			details(req, resp);
+		} else {
+			browse(req, resp);
 		}
-		browse(req, resp);
 	}
 
 	private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,6 +38,7 @@ public class BrowseServlet extends HttpServlet {
 		if (idStr == null) {
 			req.setAttribute("error", "You must select a user");
 			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+			return;
 		}
 		try {
 			User user = DaoFactory.getInstance().getUserDao().find(new Long(idStr));
@@ -44,6 +46,7 @@ public class BrowseServlet extends HttpServlet {
 		} catch (Exception e) {
 			req.setAttribute("error", "ERROR: " + e.toString());
 			req.getRequestDispatcher("/browse.jsp");
+			return;
 		}
 		req.getRequestDispatcher("/details").forward(req, resp);
 	}
@@ -70,6 +73,7 @@ public class BrowseServlet extends HttpServlet {
 		if (idStr == null) {
 			req.setAttribute("error", "You must select a user for editting");
 			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+			return;
 		}
 		try {
 			User user = DaoFactory.getInstance().getUserDao().find(new Long(idStr));
@@ -87,15 +91,15 @@ public class BrowseServlet extends HttpServlet {
 		req.getRequestDispatcher("/add").forward(req, resp);
 	}
 
-	private void browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+	private void browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Collection<User> users = null;
 		try {
 			users = DaoFactory.getInstance().getUserDao().findAll();
-			req.getSession().setAttribute("users", users);
-			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
-		} catch (DatabaseException | IOException e) {
+		} catch (DatabaseException e) {
 			throw new ServletException(e);
 		}
+		req.getSession().setAttribute("users", users);
+		req.getRequestDispatcher("/browse.jsp").forward(req, resp);
 
 	}
 

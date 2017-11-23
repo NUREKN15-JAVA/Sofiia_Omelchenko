@@ -22,7 +22,7 @@ public class EditServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.service(req, resp);
+//		super.service(req, resp);
 		if (req.getParameter("okButton") != null) {
 			doOk(req, resp);
 		} else if (req.getParameter("cancelButton") != null) {
@@ -32,25 +32,15 @@ public class EditServlet extends HttpServlet {
 		}
 	}
 
-	protected void showPage(HttpServletRequest req, HttpServletResponse resp) {
-		try {
-			req.getRequestDispatcher("/edit.jsp").forward(req, resp);
-		} catch (ServletException | IOException e) {
-			e.printStackTrace();
-		}
-
+	protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 	}
 
-	private void doCancel(HttpServletRequest req, HttpServletResponse resp) {
-		try {
-			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
-		} catch (IOException | ServletException e) {
-			e.printStackTrace();
-		}
-
+	private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/browse").forward(req, resp);
 	}
 
-	private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+	private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		User user = null;
 		try {
 			user = getUser(req);
@@ -59,15 +49,9 @@ public class EditServlet extends HttpServlet {
 			showPage(req, resp);
 			return;
 		}
-
 		processUser(user);
+		req.getRequestDispatcher("/browse").forward(req, resp);
 
-		try {
-			req.getRequestDispatcher("/browse").forward(req, resp);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
 	}
 
 	private User getUser(HttpServletRequest req) {
