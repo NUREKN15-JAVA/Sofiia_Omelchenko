@@ -57,4 +57,6 @@ public interface UserDao {
 	public Collection<User> findAll() throws DatabaseException;
 
 	public void setConnectionFactory(ConnectionFactory connectionFactory);
+	
+	public Collection<User> find(String firstName, String lastName) throws DatabaseException;
 }

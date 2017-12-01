@@ -20,6 +20,14 @@ public class UserTableModel extends AbstractTableModel {
 		this.users = new ArrayList<User>(users);
 	}
 
+	public void addUsers(Collection<User> users) {
+		this.users.addAll(users);
+	}
+
+	public void clearUsers() {
+		this.users = new ArrayList<User>();
+	}
+
 	public int getRowCount() {
 		return users.size();
 	}
