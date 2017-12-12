@@ -26,6 +26,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private UserTableModel model = null;
 	private final String message = "Are you sure you want delete this user ?";
 	
+
 	public BrowsePanel(MainFrame frame) {
 		parentFrame = frame;
 		initialize();
@@ -82,6 +83,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		return addButton;
 	}
 
+
 	private JPanel getButtonPanel() {
 		if (buttonPanel == null) {
 			buttonPanel = new JPanel();
@@ -130,27 +132,29 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			parentFrame.showEditPanel();
 		}
 		if ("delete".equalsIgnoreCase(e.getActionCommand())) { //$NON-NLS-1$
-			
-			int result = JOptionPane.showConfirmDialog(parentFrame, message, "Delete confirm", JOptionPane.YES_NO_OPTION,
-					JOptionPane.WARNING_MESSAGE);
+
+			int result = JOptionPane.showConfirmDialog(parentFrame, message, "Delete confirm",
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (result == JOptionPane.YES_OPTION) {
 				try {
 					parentFrame.getDao().delete(getSelectedUser());
-					
+
 					getUserTable().setModel(new UserTableModel(parentFrame.getDao().findAll()));
 				} catch (DatabaseException e1) {
 					JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
-		if("details".equalsIgnoreCase(e.getActionCommand())) {
+		if ("details".equalsIgnoreCase(e.getActionCommand())) {
 			this.setVisible(false);
 			parentFrame.showDetailsPanel();
 		}
+		
 	}
 
 	/**
 	 * Find selected user in the userTable
+	 * 
 	 * @return user from UserTable
 	 */
 	public User getSelectedUser() {

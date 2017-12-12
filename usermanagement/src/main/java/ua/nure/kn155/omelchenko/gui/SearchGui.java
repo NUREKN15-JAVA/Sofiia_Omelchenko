@@ -35,17 +35,18 @@ public class SearchGui extends JFrame {
 	/**
 	 * @param agent
 	 */
+
 	public SearchGui(SearchAgent agent) {
 		this.agent = agent;
 		initialize();
 	}
 
 	private void initialize() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
-        this.setTitle("Searcher");
-        this.setContentPane(getContentPanel());
-    }
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(800, 600);
+		this.setTitle("Searcher");
+		this.setContentPane(getContentPanel());
+	}
 
 	/**
 	 * @return
@@ -120,11 +121,11 @@ public class SearchGui extends JFrame {
 		}
 
 		private void initialize() {
-            this.setName("addPanel"); //$NON-NLS-1$
-            this.setLayout(new BorderLayout());
-            this.add(getFieldPanel(), BorderLayout.NORTH);
+			this.setName("addPanel"); //$NON-NLS-1$
+			this.setLayout(new BorderLayout());
+			this.add(getFieldPanel(), BorderLayout.NORTH);
 
-        }
+		}
 
 		private JPanel getButtonPanel() {
 			if (buttonPanel == null) {
@@ -136,46 +137,46 @@ public class SearchGui extends JFrame {
 		}
 
 		private JButton getCancelButton() {
-            if (cancelButton == null) {
-                cancelButton = new JButton();
-                cancelButton.setText("Cancel"); //$NON-NLS-1$
-                cancelButton.setName("cancelButton"); //$NON-NLS-1$
-                cancelButton.setActionCommand("cancel"); //$NON-NLS-1$
-                cancelButton.addActionListener(this);
-            }
-            return cancelButton;
-        }
+			if (cancelButton == null) {
+				cancelButton = new JButton();
+				cancelButton.setText("Cancel"); //$NON-NLS-1$
+				cancelButton.setName("cancelButton"); //$NON-NLS-1$
+				cancelButton.setActionCommand("cancel"); //$NON-NLS-1$
+				cancelButton.addActionListener(this);
+			}
+			return cancelButton;
+		}
 
 		private JButton getSearchButton() {
-            if (searchButton == null) {
-                searchButton = new JButton();
-                searchButton.setText("Search"); //$NON-NLS-1$
-                searchButton.setName("okButton"); //$NON-NLS-1$
-                searchButton.setActionCommand("ok"); //$NON-NLS-1$
-                searchButton.addActionListener(this);
-            }
-            return searchButton;
-        }
+			if (searchButton == null) {
+				searchButton = new JButton();
+				searchButton.setText("Search"); //$NON-NLS-1$
+				searchButton.setName("okButton"); //$NON-NLS-1$
+				searchButton.setActionCommand("ok"); //$NON-NLS-1$
+				searchButton.addActionListener(this);
+			}
+			return searchButton;
+		}
 
 		private JPanel getFieldPanel() {
-            if (fieldPanel == null) {
-                fieldPanel = new JPanel();
-                fieldPanel.setLayout(new GridLayout(2, 3));
-                addLabeledField(fieldPanel, "FirstName", getFirstNameField()); //$NON-NLS-1$
-                fieldPanel.add(getSearchButton());
-                addLabeledField(fieldPanel, "LastName", getLastNameField()); //$NON-NLS-1$
-                fieldPanel.add(getCancelButton());
-            }
-            return fieldPanel;
-        }
+			if (fieldPanel == null) {
+				fieldPanel = new JPanel();
+				fieldPanel.setLayout(new GridLayout(2, 3));
+				addLabeledField(fieldPanel, "FirstName", getFirstNameField()); //$NON-NLS-1$
+				fieldPanel.add(getSearchButton());
+				addLabeledField(fieldPanel, "LastName", getLastNameField()); //$NON-NLS-1$
+				fieldPanel.add(getCancelButton());
+			}
+			return fieldPanel;
+		}
 
 		protected JTextField getLastNameField() {
-            if (lastNameField == null) {
-                lastNameField = new JTextField();
-                lastNameField.setName("lastNameField"); //$NON-NLS-1$
-            }
-            return lastNameField;
-        }
+			if (lastNameField == null) {
+				lastNameField = new JTextField();
+				lastNameField.setName("lastNameField"); //$NON-NLS-1$
+			}
+			return lastNameField;
+		}
 
 		private void addLabeledField(JPanel panel, String labelText, JTextField textField) {
 			JLabel label = new JLabel(labelText);
@@ -185,26 +186,26 @@ public class SearchGui extends JFrame {
 		}
 
 		protected JTextField getFirstNameField() {
-            if (firstNameField == null) {
-                firstNameField = new JTextField();
-                firstNameField.setName("firstNameField"); //$NON-NLS-1$
-            }
-            return firstNameField;
-        }
+			if (firstNameField == null) {
+				firstNameField = new JTextField();
+				firstNameField.setName("firstNameField"); //$NON-NLS-1$
+			}
+			return firstNameField;
+		}
 
 		protected void doAction(ActionEvent e) throws ParseException {
-            if ("ok".equalsIgnoreCase(e.getActionCommand())) {
-                String firstName = getFirstNameField().getText();
-                String lastName = getLastNameField().getText();
-                try {
-                    clearUsers();
-                    agent.search(firstName, lastName);
-                } catch (SearchException e1) {
-                    throw new RuntimeException(e1);
-                }
-            }
-            clearFields();
-        }
+			if ("ok".equalsIgnoreCase(e.getActionCommand())) {
+				String firstName = getFirstNameField().getText();
+				String lastName = getLastNameField().getText();
+				try {
+					clearUsers();
+					agent.search(firstName, lastName);
+				} catch (SearchException e1) {
+					throw new RuntimeException(e1);
+				}
+			}
+			clearFields();
+		}
 
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -215,25 +216,25 @@ public class SearchGui extends JFrame {
 		}
 
 		private void clearFields() {
-            getFirstNameField().setText("");
-            getLastNameField().setText("");
-        }
+			getFirstNameField().setText("");
+			getLastNameField().setText("");
+		}
 	}
 
 	/**
-     * @param users
-     */
-    public void addUsers(Collection<User> users) {
-        System.out.println("addUsers : " + users);
-        UserTableModel model = (UserTableModel) getTable().getModel();
-        model.addUsers(users);
-        this.repaint();
-    }
+	 * @param users
+	 */
+	public void addUsers(Collection<User> users) {
+		System.out.println("addUsers : " + users);
+		UserTableModel model = (UserTableModel) getTable().getModel();
+		model.addUsers(users);
+		this.repaint();
+	}
 
 	private void clearUsers() {
-        System.out.println("clearUsers : ");
-        UserTableModel model = (UserTableModel) getTable().getModel();
-        model.clearUsers();
-        this.repaint();
-    }
+		System.out.println("clearUsers : ");
+		UserTableModel model = (UserTableModel) getTable().getModel();
+		model.clearUsers();
+		this.repaint();
+	}
 }

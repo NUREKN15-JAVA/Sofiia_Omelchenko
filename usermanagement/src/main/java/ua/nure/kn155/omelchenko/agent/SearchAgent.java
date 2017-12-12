@@ -13,7 +13,11 @@ import ua.nure.kn155.omelchenko.User;
 import ua.nure.kn155.omelchenko.db.DaoFactory;
 import ua.nure.kn155.omelchenko.db.DatabaseException;
 import ua.nure.kn155.omelchenko.gui.SearchGui;
-
+/**
+ * 
+ * @author София
+ * An agent for searching users in local databases
+ */
 public class SearchAgent extends Agent {
 
 	private static final long messageCounter = 60000;
@@ -63,6 +67,7 @@ public class SearchAgent extends Agent {
 
 	@Override
 	protected void takeDown() {
+		super.takeDown();
 		System.out.println(getAID().getName() + "is terminated.");
 		try {
 			DFService.deregister(this);
@@ -71,7 +76,6 @@ public class SearchAgent extends Agent {
 		}
 		gui.setVisible(false);
 		gui.dispose();
-		super.takeDown();///////////////////////////////
 	}
 
 	public void search(String firstName, String lastName) throws SearchException {
